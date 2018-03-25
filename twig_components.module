@@ -14,17 +14,8 @@ function twig_components_library_info_build() {
   foreach ($manager->getDefinitions() as $plugin_id => $definition) {
     /** @var \Drupal\twig_components\TwigComponentInterface $instance */
     $instance = $manager->createInstance($plugin_id, $definition);
-    $libraries += $instance->getLibraryDefinition();
+    $name = str_replace('twig_components/', '', $instance->getLibraryName());
+    $libraries[$name] = $instance->getLibraryDefinition();
   }
   return $libraries;
-}
-
-function twig_components_page_attachments_alter(array &$attachments) {
-  /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
-  $manager = \Drupal::service('plugin.manager.twig_component');
-  foreach ($manager->getDefinitions() as $plugin_id => $definition) {
-    /** @var \Drupal\twig_components\TwigComponentInterface $instance */
-    $instance = $manager->createInstance($plugin_id, $definition);
-    $instance->attachToBuild($attachments);
-  }
 }

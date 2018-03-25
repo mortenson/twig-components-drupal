@@ -13,7 +13,7 @@ class TwigComponentDefault extends PluginBase implements TwigComponentInterface 
    * {@inheritdoc}
    */
   public function getLibraryDefinition() {
-    $definition['component.' . $this->configuration['id']] = [
+    $definition = [
       'js' => [
         '/' . $this->configuration['base_path'] . '/' . $this->configuration['js_path'] => [],
       ],
@@ -28,8 +28,8 @@ class TwigComponentDefault extends PluginBase implements TwigComponentInterface 
   /**
    * {@inheritdoc}
    */
-  public function attachToBuild(array &$build) {
-    $build['#attached']['library'][] = 'twig_components/component.' . $this->configuration['id'];
+  public function getLibraryName() {
+    return 'twig_components/component.' . $this->configuration['id'];
   }
 
 }

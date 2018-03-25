@@ -19,11 +19,11 @@ interface TwigComponentInterface extends PluginInspectionInterface, DerivativeIn
   public function getLibraryDefinition();
 
   /**
-   * Attaches required libraries to the given render array.
+   * Gets the library name for this Twig Component.
    *
-   * @param array &$build
-   *   A render array the component will be rendered in.
+   * @return string
+   *   The library name for this Twig Component.
    */
-  public function attachToBuild(array &$build);
+  public function getLibraryName();
 
 }

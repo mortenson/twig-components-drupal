@@ -2,3 +2,7 @@ services:
   plugin.manager.twig_component:
     class: Drupal\twig_components\TwigComponentPluginManager
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@theme_handler']
+  twig_components.event_subscriber:
+    class: Drupal\twig_components\EventSubscriber\TwigComponentsEventSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file Contains hooks for the twig_components module.
+ */
+
+/**
+ * Implements hook_library_info_build().
+ */
+function twig_components_library_info_build() {
+  $libraries = [];
+  /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
+  $manager = \Drupal::service('plugin.manager.twig_component');
+  foreach ($manager->getDefinitions() as $plugin_id => $definition) {
+    /** @var \Drupal\twig_components\TwigComponentInterface $instance */
+    $instance = $manager->createInstance($plugin_id, $definition);
+    $libraries += $instance->getLibraryDefinition();
+  }
+  return $libraries;
+}
+
+function twig_components_page_attachments_alter(array &$attachments) {
+  /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
+  $manager = \Drupal::service('plugin.manager.twig_component');
+  foreach ($manager->getDefinitions() as $plugin_id => $definition) {
+    /** @var \Drupal\twig_components\TwigComponentInterface $instance */
+    $instance = $manager->createInstance($plugin_id, $definition);
+    $instance->attachToBuild($attachments);
+  }
+}

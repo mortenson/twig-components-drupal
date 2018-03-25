@@ -1,0 +1,5 @@
+type: module
+name: Twig Components
+description: Adds Drupal support for Twig Components.
+package: Twig Components
+core: 8.x

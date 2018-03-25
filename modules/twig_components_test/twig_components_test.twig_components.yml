@@ -1,0 +1,4 @@
+say_hello:
+  tag: say-hello
+  js_path: components/dist/say-hello.js
+  template_path: components/dist/say-hello.twig

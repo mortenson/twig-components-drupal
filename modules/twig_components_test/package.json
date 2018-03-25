@@ -1,0 +1,33 @@
+{
+  "name": "drupal-twig-components-test",
+  "version": "0.0.0",
+  "description": "A test module for Twig Components.",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Samuel Mortenson <samuel@mortenson.coffee>",
+  "license": "MIT",
+  "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.22",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-minify-webpack-plugin": "^0.2.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "emit-file-loader": "0.0.1",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "inline-source-loader": "^0.0.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "twig-loader": "^0.3.1",
+    "webpack": "^3.10.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "twig-components": "^0.0.5"
+  }
+}

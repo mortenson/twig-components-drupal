@@ -1,0 +1,21 @@
+webcomponentsjs:
+  remote: https://www.webcomponents.org/polyfills
+  version: VERSION
+  license:
+    name: BSD
+    url: https://github.com/webcomponents/webcomponentsjs
+    gpl-compatible: true
+  js:
+    /libraries/webcomponentsjs/custom-elements-es5-adapter.js: { minified: true }
+    /libraries/webcomponentsjs/webcomponents-lite.js: { minified: true }
+
+twigjs:
+  remote: https://github.com/twigjs/twig.js
+  version: VERSION
+  license:
+    name: BSD
+    url: https://github.com/twigjs/twig.js
+    gpl-compatible: true
+  js:
+    /libraries/twigjs/twig.min.js:
+      minified: true

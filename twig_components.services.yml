@@ -1,0 +1,4 @@
+services:
+  plugin.manager.twig_component:
+    class: Drupal\twig_components\TwigComponentPluginManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@theme_handler']

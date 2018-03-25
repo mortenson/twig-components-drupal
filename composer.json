@@ -1,0 +1,16 @@
+{
+    "name": "drupal/twig_components",
+    "description": "Adds Drupal support for Twig Components.",
+    "type": "drupal-module",
+    "require": {
+        "mortenson/twig-components-ssr": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Mortenson",
+            "email": "samuel@mortenson.coffee"
+        }
+    ],
+    "minimum-stability": "dev"
+}

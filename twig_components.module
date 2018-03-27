@@ -4,6 +4,8 @@
  * @file Contains hooks for the twig_components module.
  */
 
+use Drupal\Core\Asset\AttachedAssets;
+
 /**
  * Implements hook_library_info_build().
  */
@@ -18,4 +20,44 @@ function twig_components_library_info_build() {
     $libraries[$name] = $instance->getLibraryDefinition();
   }
   return $libraries;
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function twig_components_element_info_alter(&$types) {
+  $types['text_format']['#pre_render'][] = '_twig_components_pre_render_text_format';
+}
+
+/**
+ * Pre-render callback for text_format elements.
+ */
+function _twig_components_pre_render_text_format($variables) {
+  if (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+    // Get all twig component libraries.
+    $libraries = [];
+    /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
+    $manager = \Drupal::service('plugin.manager.twig_component');
+    foreach ($manager->getDefinitions() as $plugin_id => $definition) {
+      /** @var \Drupal\twig_components\TwigComponentInterface $instance */
+      $instance = $manager->createInstance($plugin_id, $definition);
+      $libraries[] = $instance->getLibraryName();
+    }
+    // Resolve all their assets.
+    /** @var \Drupal\Core\Asset\AssetResolver $asset_resolver */
+    $asset_resolver = \Drupal::service('asset.resolver');
+    /** @var \Drupal\Core\Asset\JsCollectionRenderer $js_renderer */
+    $js_renderer = \Drupal::service('asset.js.collection_renderer');
+    $assets = new AttachedAssets();
+    $assets->setLibraries($libraries);
+    list($js_assets_header, $js_assets_footer) = $asset_resolver->getJsAssets($assets, FALSE);
+    // Render their assets and add the HTML as a Drupal setting.
+    $build = [];
+    $build[] = $js_renderer->render($js_assets_header);
+    $build[] = $js_renderer->render($js_assets_footer);
+    $scripts = \Drupal::service('renderer')->renderRoot($build);
+    $variables['#attached']['drupalSettings']['twigComponentsCKEditorScripts'] = $scripts;
+    $variables['#attached']['library'][] = 'twig_components/ckeditor';
+  }
+  return $variables;
 }

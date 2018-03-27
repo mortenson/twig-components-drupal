@@ -17,5 +17,11 @@ twigjs:
     url: https://github.com/twigjs/twig.js
     gpl-compatible: true
   js:
-    /libraries/twigjs/twig.min.js:
-      minified: true
+    /libraries/twigjs/twig.min.js: { minified: true }
+
+ckeditor:
+  version: VERSION
+  js:
+    js/twig_components_ckeditor.js: {}
+  dependencies:
+    - ckeditor/drupal.ckeditor

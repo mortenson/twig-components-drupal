@@ -3,7 +3,7 @@
  * Ensures that twig components are properly loaded into CKEditor.
  */
 
-(function (Drupal, CKEDITOR, $) {
+(function (Drupal, CKEDITOR) {
 
   "use strict";
 
@@ -39,4 +39,4 @@
     }
   };
 
-}(Drupal, CKEDITOR, jQuery));
+}(Drupal, CKEDITOR));

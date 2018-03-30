@@ -14,6 +14,7 @@ class TwigComponentDefault extends PluginBase implements TwigComponentInterface 
    */
   public function getLibraryDefinition() {
     $definition = [
+      'version' => 'VERSION',
       'js' => [
         '/' . $this->configuration['base_path'] . '/' . $this->configuration['js_path'] => [],
       ],

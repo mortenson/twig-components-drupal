@@ -7,11 +7,11 @@
 
   "use strict";
 
-  function attachScripts () {
+  function attachScripts (editor) {
     if (!settings.twigComponentsCKEditorScripts) {
       return;
     }
-    var iframeDoc = this.document.$;
+    var iframeDoc = editor.document.$;
     for (var tag_name in settings.twigComponentsCKEditorScripts) {
       if (iframeDoc.getElementsByTagName(tag_name).length) {
         var wrapper = iframeDoc.createElement('div');
@@ -41,8 +41,13 @@
     else {
       editor.twigComponentsProcessed = true;
     }
-    editor.on('change', attachScripts);
-    attachScripts.call(editor);
+    editor.on('change', function () {
+      setTimeout(attachScripts, 0, editor);
+    });
+    editor.on('contentDom', function () {
+      setTimeout(attachScripts, 0, editor);
+    });
+    setTimeout(attachScripts, 0, editor);
   });
 
 }(drupalSettings, CKEDITOR));

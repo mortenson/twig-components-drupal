@@ -1,0 +1,23 @@
+{
+  "name": "drupal-twig-components-example",
+  "version": "0.0.0",
+  "description": "An example module for Twig Components.",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Samuel Mortenson <samuel@mortenson.coffee>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "twig-loader": "^0.3.1",
+    "webpack": "^3.10.0"
+  },
+  "files": [
+    "components"
+  ],
+  "dependencies": {
+    "twig-components": "^0.0.6"
+  }
+}

@@ -1,0 +1,6 @@
+type: module
+name: Twig Components Example
+description: An example module for Twig Components.
+core: 8.x
+dependencies:
+  - twig_components

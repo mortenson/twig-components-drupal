@@ -43,16 +43,8 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
     $content = $renderer->render($content);
     $libraries = array_intersect_key($libraries, array_flip($renderer->getRenderedTags()));
     $response->addAttachments(['library' => array_values($libraries)]);
-    // While our renderer does not close known HTML tags like <br />, Drupal
-    // adds many tags in the render process that should be viewed as
-    // "self-closing", even though they're not valid HTML elements.
+    // Remove automatically closed Big Pipe tags from the response.
     $content = str_replace([
-      '</js-placeholder>',
-      '</css-placeholder>',
-      '</head-placeholder>',
-      '</drupal-big-pipe-scripts-bottom-marker>',
-      '</js-bottom-placeholder>',
-      '</drupal-big-pipe-scripts-bottom-marker>',
       '</nojs-bigpipe-placeholder-styles-placeholder>',
       '</nojs-bigpipe-placeholder-scripts-placeholder>',
     ], '', $content);

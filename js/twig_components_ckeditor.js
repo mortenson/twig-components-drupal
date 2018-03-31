@@ -35,12 +35,6 @@
 
   CKEDITOR.on('instanceReady', function (event) {
     var editor = event.editor;
-    if (editor.twigComponentsProcessed) {
-      return;
-    }
-    else {
-      editor.twigComponentsProcessed = true;
-    }
     editor.on('change', function () {
       setTimeout(attachScripts, 0, editor);
     });

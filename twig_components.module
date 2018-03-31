@@ -34,8 +34,6 @@ function twig_components_element_info_alter(&$types) {
  */
 function _twig_components_pre_render_text_format($variables) {
   if (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
-    // Get all twig component libraries.
-    $scripts = [];
     /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
     $manager = \Drupal::service('plugin.manager.twig_component');
     /** @var \Drupal\Core\Asset\AssetResolver $asset_resolver */
@@ -43,18 +41,18 @@ function _twig_components_pre_render_text_format($variables) {
     /** @var \Drupal\Core\Asset\JsCollectionRenderer $js_renderer */
     $js_renderer = \Drupal::service('asset.js.collection_renderer');
     $renderer = \Drupal::service('renderer');
+    // Get all scripts required for each Twig Component library.
+    $scripts = [];
     foreach ($manager->getDefinitions() as $plugin_id => $definition) {
       /** @var \Drupal\twig_components\TwigComponentInterface $instance */
       $instance = $manager->createInstance($plugin_id, $definition);
       $assets = new AttachedAssets();
       $assets->setLibraries([$instance->getLibraryName()]);
       list($js_assets_header, $js_assets_footer) = $asset_resolver->getJsAssets($assets, FALSE);
-      // Render their assets and add the HTML as a Drupal setting.
-      $build = [];
-      $build[] = $js_renderer->render($js_assets_header);
-      $build[] = $js_renderer->render($js_assets_footer);
+      $build = $js_renderer->render(array_merge($js_assets_header, $js_assets_footer));
       $scripts[$definition['tag']] = $renderer->renderRoot($build);
     }
+    // Pass the rendered script tags to be lazy-loaded in CKEditor.
     $variables['#attached']['drupalSettings']['twigComponentsCKEditorScripts'] = $scripts;
     $variables['#attached']['library'][] = 'twig_components/ckeditor';
   }

@@ -1,0 +1,4 @@
+test_tag:
+  tag: test-tag
+  js_path: components/test-tag.js
+  template_path: components/test-tag.twig

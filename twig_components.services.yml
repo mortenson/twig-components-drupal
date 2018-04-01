@@ -4,5 +4,6 @@ services:
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@theme_handler']
   twig_components.event_subscriber:
     class: Drupal\twig_components\EventSubscriber\TwigComponentsEventSubscriber
+    arguments: ['@plugin.manager.twig_component']
     tags:
       - { name: event_subscriber }

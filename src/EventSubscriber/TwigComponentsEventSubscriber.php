@@ -3,6 +3,7 @@
 namespace Drupal\twig_components\EventSubscriber;
 
 use Drupal\Core\Render\HtmlResponse;
+use Drupal\twig_components\TwigComponentPluginManager;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,6 +13,22 @@ use TwigComponentsSSR\Renderer;
  * Response subscriber to handle HTML responses.
  */
 class TwigComponentsEventSubscriber implements EventSubscriberInterface {
+
+  /**
+   * @var \Drupal\twig_components\TwigComponentPluginManager
+   *   The Twig Component plugin manager.
+   */
+  protected $twigComponentManager;
+
+  /**
+   * Constructs a \Drupal\twig_components\EventSubscriber\TwigComponentsEventSubscriber object.
+   *
+   * @param \Drupal\twig_components\TwigComponentPluginManager $twig_component_manager
+   *   The Twig Component plugin manager.
+   */
+  public function __construct(TwigComponentPluginManager $twig_component_manager) {
+    $this->twigComponentManager = $twig_component_manager;
+  }
 
   /**
    * Server side renders twig components in HtmlResponse responses.
@@ -27,11 +44,9 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
     $tag_templates = [];
     $paths = [];
     $libraries = [];
-    /** @var \Drupal\twig_components\TwigComponentPluginManager $manager */
-    $manager = \Drupal::service('plugin.manager.twig_component');
-    foreach ($manager->getDefinitions() as $plugin_id => $definition) {
+    foreach ($this->twigComponentManager->getDefinitions() as $plugin_id => $definition) {
       /** @var \Drupal\twig_components\TwigComponentInterface $instance */
-      $instance = $manager->createInstance($plugin_id, $definition);
+      $instance = $this->twigComponentManager->createInstance($plugin_id, $definition);
       $tag_templates[$definition['tag']] = basename($definition['template_path']);
       $paths[] = $definition['base_path'] . '/' . dirname($definition['template_path']);
       $libraries[$definition['tag']] = $instance->getLibraryName();

@@ -15,13 +15,14 @@ use TwigComponentsSSR\Renderer;
 class TwigComponentsEventSubscriber implements EventSubscriberInterface {
 
   /**
+   * The Twig Component plugin manager.
+   *
    * @var \Drupal\twig_components\TwigComponentPluginManager
-   *   The Twig Component plugin manager.
    */
   protected $twigComponentManager;
 
   /**
-   * Constructs a \Drupal\twig_components\EventSubscriber\TwigComponentsEventSubscriber object.
+   * Constructs a TwigComponentsEventSubscriber object.
    *
    * @param \Drupal\twig_components\TwigComponentPluginManager $twig_component_manager
    *   The Twig Component plugin manager.

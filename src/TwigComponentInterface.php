@@ -26,4 +26,20 @@ interface TwigComponentInterface extends PluginInspectionInterface, DerivativeIn
    */
   public function getLibraryName();
 
+  /**
+   * Gets the full path to the JS for this Twig Component.
+   *
+   * @return string
+   *   The full path to the JS for this Twig Component.
+   */
+  public function getFullJsPath();
+
+  /**
+   * Gets the full path to the template for this Twig Component.
+   *
+   * @return string
+   *   The full path to the template for this Twig Component.
+   */
+  public function getFullTemplatePath();
+
 }

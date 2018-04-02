@@ -48,8 +48,9 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
     foreach ($this->twigComponentManager->getDefinitions() as $plugin_id => $definition) {
       /** @var \Drupal\twig_components\TwigComponentInterface $instance */
       $instance = $this->twigComponentManager->createInstance($plugin_id, $definition);
-      $tag_templates[$definition['tag']] = basename($definition['template_path']);
-      $paths[] = $definition['base_path'] . '/' . dirname($definition['template_path']);
+      $template_path = $instance->getFullTemplatePath();
+      $tag_templates[$definition['tag']] = basename($template_path);
+      $paths[] = ltrim(dirname($template_path), '/');
       $libraries[$definition['tag']] = $instance->getLibraryName();
     }
     $content = $response->getContent();

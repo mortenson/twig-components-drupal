@@ -16,7 +16,7 @@ class TwigComponentDefault extends PluginBase implements TwigComponentInterface 
     $definition = [
       'version' => 'VERSION',
       'js' => [
-        '/' . $this->configuration['base_path'] . '/' . $this->configuration['js_path'] => [],
+        $this->getFullJsPath() => [],
       ],
       'dependencies' => [
         'twig_components/webcomponentsjs',
@@ -31,6 +31,26 @@ class TwigComponentDefault extends PluginBase implements TwigComponentInterface 
    */
   public function getLibraryName() {
     return 'twig_components/component.' . $this->configuration['id'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFullJsPath() {
+    if ($this->configuration['js_path'][0] === '/') {
+      return $this->configuration['js_path'];
+    }
+    return '/' . $this->configuration['base_path'] . '/' . $this->configuration['js_path'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFullTemplatePath() {
+    if ($this->configuration['template_path'][0] === '/') {
+      return $this->configuration['template_path'];
+    }
+    return '/' . $this->configuration['base_path'] . '/' . $this->configuration['template_path'];
   }
 
 }

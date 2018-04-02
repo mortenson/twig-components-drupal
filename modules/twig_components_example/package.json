@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "An example module for Twig Components.",
   "scripts": {
+    "start": "webpack --watch",
     "build": "webpack"
   },
   "author": "Samuel Mortenson <samuel@mortenson.coffee>",

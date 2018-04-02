@@ -6,6 +6,30 @@
  */
 
 use Drupal\Core\Asset\AttachedAssets;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function twig_components_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.twig_components':
+      $readme = file_get_contents(__DIR__ . '/README.txt');
+      // Remove the header.
+      $readme = preg_replace("/.*\n====+/", '', $readme);
+      // Turn section titles into headers.
+      $readme = preg_replace("/\n([^\n]*)\n----+/", "\n<h2>$1</h2>\n", $readme);
+      // Format ordered lists.
+      $readme = preg_replace("/(\n[0-9]\..+?(?=\n\n))/s", "\n<ol>$1</ol>\n", $readme);
+      $readme = preg_replace("/[0-9]\.(.+?)(?=(\n[0-9]\.|\n\n))/s", "\n<li>$1</li>\n", $readme);
+      // Format unordered lists.
+      $readme = preg_replace("/(\n-\s.+?(?=\n\n))/s", "\n<ul>$1</ul>\n", $readme);
+      $readme = preg_replace("/-\s(.+?)(?=(\n-\s|\n\n))/s", "\n<li>$1</li>\n", $readme);
+      // Wrap everything else.
+      $readme = preg_replace("/(?<=\S\n\n)([^<]+?)(?=\n\n)/s", "\n<p>$1</p>\n", $readme);
+      return $readme;
+  }
+}
 
 /**
  * Implements hook_library_info_build().

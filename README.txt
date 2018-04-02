@@ -5,6 +5,18 @@ About this module
 ------------------
 This module lets you use Twig Components with Drupal.
 
+Installation
+-------------
+
+1. Require this module with Composer, or otherwise ensure that
+"mortenson/twig-components-ssr" is installed via Composer on your site.
+2. Install the @webcomponents/webcomponentsjs NPM package and place its
+contents in /libraries/webcomponentsjs, so that the
+"/libraries/webcomponentsjs/custom-elements-es5-adapter.js" file exists.
+3. Install the twig NPM package and place its contents in /libraries/twigjs,
+so that the "/libraries/twigjs/twig.min.js" file exists.
+4. Install the Twig Components module
+
 Features
 ---------
 

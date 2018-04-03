@@ -25,11 +25,6 @@ Features
 3. Lazy-loading of Twig Component libraries - only components found in the
 response have their Javascript loaded
 
-Writing your first Twig Component
-----------------------------------
-
-@todo documentation
-
 Example module
 ---------------
 

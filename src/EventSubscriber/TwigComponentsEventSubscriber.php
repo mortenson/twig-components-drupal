@@ -3,6 +3,7 @@
 namespace Drupal\twig_components\EventSubscriber;
 
 use Drupal\Core\Render\HtmlResponse;
+use Drupal\Core\Template\TwigEnvironment;
 use Drupal\twig_components\TwigComponentPluginManager;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -22,13 +23,21 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
   protected $twigComponentManager;
 
   /**
+   * Drupal's Twig environment.
+   *
+   * @var \Drupal\Core\Template\TwigEnvironment
+   */
+  protected $drupalEnvironment;
+
+  /**
    * Constructs a TwigComponentsEventSubscriber object.
    *
    * @param \Drupal\twig_components\TwigComponentPluginManager $twig_component_manager
    *   The Twig Component plugin manager.
    */
-  public function __construct(TwigComponentPluginManager $twig_component_manager) {
+  public function __construct(TwigComponentPluginManager $twig_component_manager, TwigEnvironment $drupal_environment) {
     $this->twigComponentManager = $twig_component_manager;
+    $this->drupalEnvironment = $drupal_environment;
   }
 
   /**
@@ -45,6 +54,7 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
     $tag_templates = [];
     $paths = [];
     $libraries = [];
+    // Grab all templates and libraries for every Twig Component.
     foreach ($this->twigComponentManager->getDefinitions() as $plugin_id => $definition) {
       /** @var \Drupal\twig_components\TwigComponentInterface $instance */
       $instance = $this->twigComponentManager->createInstance($plugin_id, $definition);
@@ -53,10 +63,14 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
       $paths[] = ltrim(dirname($template_path), '/');
       $libraries[$definition['tag']] = $instance->getLibraryName();
     }
-    $content = $response->getContent();
+    // We create a new environment because core's includes many custom
+    // extensions that Twig.js does not have.
     $loader = new \Twig_Loader_Filesystem($paths, DRUPAL_ROOT);
     $environment = new \Twig_Environment($loader);
+    $environment->setCache($this->drupalEnvironment->getCache(FALSE));
+    // Server side render components and determine what libraries to add.
     $renderer = new Renderer($tag_templates, $environment);
+    $content = $response->getContent();
     $content = $renderer->render($content);
     $libraries = array_intersect_key($libraries, array_flip($renderer->getRenderedTags()));
     $response->addAttachments(['library' => array_values($libraries)]);

@@ -34,6 +34,8 @@ class TwigComponentsEventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\twig_components\TwigComponentPluginManager $twig_component_manager
    *   The Twig Component plugin manager.
+   * @param \Drupal\Core\Template\TwigEnvironment $drupal_environment
+   *   Drupal's Twig environment.
    */
   public function __construct(TwigComponentPluginManager $twig_component_manager, TwigEnvironment $drupal_environment) {
     $this->twigComponentManager = $twig_component_manager;

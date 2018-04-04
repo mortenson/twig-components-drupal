@@ -1,10 +1,14 @@
+const path = require('path');
+
 module.exports = [
   {
+    mode: 'development',
     entry: {
       'say-hello': './components/say-hello.js'
     },
     output: {
-      filename: 'components/[name].bundled.js',
+      filename: '[name].bundled.js',
+      path: path.resolve(__dirname, 'components'),
     },
     externals: {
       'twig': 'Twig',

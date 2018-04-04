@@ -13,7 +13,8 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "twig-loader": "^0.3.1",
-    "webpack": "^3.10.0"
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
   },
   "files": [
     "components"

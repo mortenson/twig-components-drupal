@@ -17,7 +17,7 @@ twigjs:
     url: https://github.com/twigjs/twig.js
     gpl-compatible: true
   js:
-    /libraries/twigjs/twig.min.js: { minified: true }
+    /libraries/twig/twig.min.js: { minified: true }
 
 ckeditor:
   version: VERSION

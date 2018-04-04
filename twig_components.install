@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Defines library requirements and install routines for Twig Components.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function twig_components_requirements($phase) {
+
+  $requirements = [];
+
+  $library_paths = [
+    DRUPAL_ROOT . '/libraries/webcomponentsjs/custom-elements-es5-adapter.js',
+    DRUPAL_ROOT . '/libraries/webcomponentsjs/webcomponents-lite.js',
+    DRUPAL_ROOT . '/libraries/twig/twig.min.js',
+  ];
+
+  foreach ($library_paths as $path) {
+    if (!file_exists($path)) {
+      $requirements['libraries_missing'] = [
+        'title' => t('Library files missing'),
+        'description' => t('Twig Components requires specific libraries to be installed in /libraries. Consult README.txt or run "./twig_components/scripts/copyfiles.sh [docroot]".'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  return $requirements;
+}

@@ -10,12 +10,10 @@ Installation
 
 1. Require this module with Composer, or otherwise ensure that
 "mortenson/twig-components-ssr" is installed via Composer on your site.
-2. Install the @webcomponents/webcomponentsjs NPM package and place its
-contents in /libraries/webcomponentsjs, so that the
-"/libraries/webcomponentsjs/custom-elements-es5-adapter.js" file exists.
-3. Install the twig NPM package and place its contents in /libraries/twigjs,
-so that the "/libraries/twigjs/twig.min.js" file exists.
-4. Install the Twig Components module
+2. Install the @webcomponents/webcomponentsjs and twig NPM packages and copy
+them to /libraries. You can also run the "./scripts/copyfiles.sh" script to do
+this for you automatically.
+3. Install the Twig Components module
 
 Features
 ---------
